@@ -1,0 +1,4338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width,
+      initial-scale=1.0,
+      maximum-scale=1.0,
+      user-scalable=no">
+
+<title>love.exe</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap"
+      rel="stylesheet">
+
+<script src="https://code.iconify.design/iconify-icon/3.0.2/iconify-icon.min.js"></script>
+
+
+<style>
+
+/* =========================================================
+   RESET
+========================================================= */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    -webkit-tap-highlight-color:transparent;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    min-height:100vh;
+    overflow-x:hidden;
+
+    background:
+        radial-gradient(
+            #f6bfd3 1.5px,
+            transparent 1.5px
+        );
+
+    background-size:25px 25px;
+    background-color:#ffeaf2;
+
+    color:#71334e;
+
+    font-family:
+        "Press Start 2P",
+        monospace;
+}
+
+button,
+input{
+    font-family:inherit;
+}
+
+iconify-icon{
+    display:inline-block;
+    width:1em;
+    height:1em;
+    vertical-align:middle;
+}
+
+
+/* =========================================================
+   BACKGROUND
+========================================================= */
+
+.background-decoration{
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    z-index:-1;
+}
+
+.bg-icon{
+    position:absolute;
+    color:#efb2c9;
+    opacity:.45;
+
+    animation:
+        slowFloat 5s ease-in-out infinite;
+}
+
+.bg-icon:nth-child(1){
+    top:7%;
+    left:7%;
+    font-size:28px;
+}
+
+.bg-icon:nth-child(2){
+    top:17%;
+    right:8%;
+    font-size:21px;
+    animation-delay:1s;
+}
+
+.bg-icon:nth-child(3){
+    bottom:20%;
+    left:8%;
+    font-size:25px;
+    animation-delay:2s;
+}
+
+.bg-icon:nth-child(4){
+    bottom:8%;
+    right:9%;
+    font-size:30px;
+    animation-delay:3s;
+}
+
+@keyframes slowFloat{
+
+    0%,100%{
+        transform:translateY(0);
+    }
+
+    50%{
+        transform:translateY(-10px);
+    }
+
+}
+
+
+/* =========================================================
+   PASSWORD SCREEN
+========================================================= */
+
+#passwordScreen{
+    position:fixed;
+    inset:0;
+    z-index:2000;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    padding:15px;
+
+    background:#ffe9f2;
+
+    transition:
+        opacity .6s ease,
+        transform .6s ease;
+}
+
+.password-window{
+    width:100%;
+    max-width:350px;
+
+    background:#ffd1df;
+
+    border:5px solid #c32968;
+
+    box-shadow:
+        7px 7px 0 #8d1747,
+        inset 0 0 0 3px #fff4f8;
+
+    animation:
+        passwordWindowEntrance .7s ease;
+}
+
+@keyframes passwordWindowEntrance{
+
+    from{
+        opacity:0;
+        transform:
+            scale(.75)
+            translateY(30px);
+    }
+
+    to{
+        opacity:1;
+        transform:
+            scale(1)
+            translateY(0);
+    }
+
+}
+
+.password-window.shake{
+    animation:passwordShake .4s ease;
+}
+
+@keyframes passwordShake{
+
+    0%,100%{
+        transform:translateX(0);
+    }
+
+    20%{
+        transform:translateX(-10px);
+    }
+
+    40%{
+        transform:translateX(10px);
+    }
+
+    60%{
+        transform:translateX(-8px);
+    }
+
+    80%{
+        transform:translateX(8px);
+    }
+
+}
+
+.password-title-bar{
+    height:48px;
+
+    display:flex;
+    align-items:center;
+
+    padding:8px 10px;
+
+    background:#ed4b91;
+
+    border-bottom:4px solid #be2362;
+
+    color:#fff;
+
+    font-size:8px;
+}
+
+.password-title{
+    flex:1;
+}
+
+.password-window-button{
+    width:23px;
+    height:23px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    background:#ffc0d6;
+
+    border:3px solid #a61d55;
+
+    color:#8b1948;
+}
+
+.password-content{
+    text-align:center;
+    padding:24px 16px 22px;
+}
+
+.password-icon{
+    display:flex;
+    justify-content:center;
+
+    color:#cf2b6c;
+    font-size:52px;
+
+    margin-bottom:14px;
+
+    animation:
+        passwordPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes passwordPulse{
+
+    0%,100%{
+        transform:scale(1);
+    }
+
+    50%{
+        transform:scale(1.08);
+    }
+
+}
+
+.password-content h1{
+    font-size:12px;
+    line-height:1.8;
+
+    color:#c32667;
+
+    margin-bottom:9px;
+}
+
+.password-description{
+    font-family:Arial,sans-serif;
+
+    font-size:13px;
+    line-height:1.55;
+
+    color:#7e4057;
+
+    margin-bottom:17px;
+}
+
+.password-input-area{
+    position:relative;
+    width:100%;
+    margin-bottom:8px;
+}
+
+#passwordInput{
+    width:100%;
+    height:50px;
+
+    padding:
+        0
+        48px
+        0
+        12px;
+
+    border:4px solid #a51d55;
+
+    outline:none;
+
+    background:#fff3f7;
+
+    color:#70203f;
+
+    font-family:
+        "Press Start 2P",
+        monospace;
+
+    font-size:10px;
+
+    text-align:center;
+
+    letter-spacing:3px;
+
+    box-shadow:
+        4px 4px 0 #8b1746;
+}
+
+#passwordInput::placeholder{
+    color:#c58a9f;
+    letter-spacing:1px;
+    font-size:7px;
+}
+
+.password-toggle{
+    position:absolute;
+
+    top:6px;
+    right:6px;
+
+    width:37px;
+    height:37px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border:3px solid #a51d55;
+
+    background:#ffb4cb;
+
+    color:#8b1948;
+
+    font-size:17px;
+
+    cursor:pointer;
+}
+
+.password-error{
+    min-height:23px;
+
+    margin-top:8px;
+
+    color:#b31f59;
+
+    font-family:Arial,sans-serif;
+
+    font-size:12px;
+    font-weight:bold;
+}
+
+.password-button{
+    width:100%;
+
+    padding:14px 10px;
+
+    margin-top:5px;
+
+    border:4px solid #a51d55;
+
+    background:#ff91ba;
+
+    color:#70203f;
+
+    font-family:inherit;
+
+    font-size:7px;
+
+    box-shadow:
+        5px 5px 0 #8b1746;
+
+    cursor:pointer;
+}
+
+.password-button:active{
+    transform:translate(4px,4px);
+
+    box-shadow:
+        1px 1px 0 #8b1746;
+}
+
+.password-hint{
+    margin-top:15px;
+
+    font-size:5px;
+    line-height:1.8;
+
+    color:#a44b6a;
+}
+
+
+/* =========================================================
+   START SCREEN
+========================================================= */
+
+#startScreen{
+    position:fixed;
+    inset:0;
+    z-index:1000;
+
+    display:none;
+
+    align-items:center;
+    justify-content:center;
+
+    padding:15px;
+
+    background:#ffe9f2;
+
+    transition:
+        opacity .6s ease,
+        transform .6s ease;
+}
+
+.start-window{
+    width:100%;
+    max-width:350px;
+
+    background:#ffd1df;
+
+    border:5px solid #c32968;
+
+    box-shadow:
+        7px 7px 0 #8d1747,
+        inset 0 0 0 3px #fff4f8;
+
+    animation:
+        windowEntrance .7s ease;
+}
+
+@keyframes windowEntrance{
+
+    from{
+        opacity:0;
+        transform:
+            scale(.75)
+            translateY(30px);
+    }
+
+    to{
+        opacity:1;
+        transform:
+            scale(1)
+            translateY(0);
+    }
+
+}
+
+.title-bar{
+    height:48px;
+
+    display:flex;
+    align-items:center;
+
+    padding:8px 10px;
+
+    background:#ed4b91;
+
+    border-bottom:4px solid #be2362;
+
+    color:#fff;
+
+    font-size:8px;
+}
+
+.title-name{
+    flex:1;
+}
+
+.window-buttons{
+    display:flex;
+    gap:5px;
+}
+
+.window-button{
+    width:23px;
+    height:23px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    background:#ffc0d6;
+
+    border:3px solid #a51d55;
+
+    color:#8b1948;
+}
+
+.start-content{
+    text-align:center;
+    padding:25px 16px 22px;
+}
+
+.start-icon{
+    display:flex;
+    justify-content:center;
+
+    color:#cf2b6c;
+
+    font-size:56px;
+
+    margin-bottom:15px;
+
+    animation:
+        heartbeat 1.2s infinite;
+}
+
+@keyframes heartbeat{
+
+    0%,100%{
+        transform:scale(1);
+    }
+
+    50%{
+        transform:scale(1.13);
+    }
+
+}
+
+.start-content h1{
+    font-size:14px;
+    line-height:1.8;
+
+    color:#c32667;
+
+    margin-bottom:12px;
+}
+
+.start-content p{
+    font-family:Arial,sans-serif;
+
+    font-size:14px;
+    line-height:1.6;
+
+    color:#7e4057;
+
+    margin-bottom:20px;
+}
+
+.start-button{
+    width:100%;
+
+    padding:15px 10px;
+
+    border:4px solid #a51d55;
+
+    background:#ff91ba;
+
+    color:#70203f;
+
+    font-family:inherit;
+
+    font-size:8px;
+
+    box-shadow:
+        5px 5px 0 #8b1746;
+
+    cursor:pointer;
+}
+
+.start-button:active{
+    transform:translate(4px,4px);
+
+    box-shadow:
+        1px 1px 0 #8b1746;
+}
+
+
+/* =========================================================
+   MAIN APP
+========================================================= */
+
+#app{
+    display:none;
+
+    min-height:100vh;
+
+    padding:
+        15px
+        12px
+        105px;
+}
+
+.container{
+    width:100%;
+    max-width:450px;
+
+    margin:auto;
+}
+
+
+/* =========================================================
+   TOP WINDOW
+========================================================= */
+
+.main-window{
+    background:#ff79ad;
+
+    border:5px solid #bd2765;
+
+    box-shadow:
+        6px 6px 0 #901746;
+
+    margin-bottom:15px;
+}
+
+.main-title{
+    display:flex;
+    align-items:center;
+
+    padding:9px;
+
+    color:#fff;
+
+    font-size:8px;
+}
+
+.main-title-name{
+    flex:1;
+}
+
+.main-buttons{
+    display:flex;
+    gap:5px;
+}
+
+.main-button{
+    width:22px;
+    height:22px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    background:#ffc2d6;
+
+    border:3px solid #a51d55;
+
+    color:#8b1948;
+}
+
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
+
+.nav{
+    display:flex;
+    overflow-x:auto;
+
+    scrollbar-width:none;
+
+    background:#ffd3e1;
+
+    border:4px solid #c12867;
+
+    margin-bottom:18px;
+}
+
+.nav::-webkit-scrollbar{
+    display:none;
+}
+
+.nav-item{
+    flex:0 0 auto;
+
+    display:flex;
+    align-items:center;
+
+    gap:5px;
+
+    padding:12px 10px;
+
+    border-right:3px solid #dd7a9d;
+
+    color:#803450;
+
+    font-size:5px;
+
+    cursor:pointer;
+}
+
+.nav-item iconify-icon{
+    font-size:13px;
+}
+
+.nav-item.active{
+    background:#f15a98;
+    color:#fff;
+}
+
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.hero{
+    text-align:center;
+
+    margin:
+        18px
+        0
+        25px;
+}
+
+.hero-small{
+    font-size:5px;
+    line-height:1.8;
+
+    color:#a44b6a;
+
+    margin-bottom:10px;
+}
+
+.hero h1{
+    font-size:15px;
+    line-height:1.8;
+
+    color:#c52869;
+}
+
+.hero-icon{
+    margin-top:10px;
+
+    color:#d02c6e;
+
+    font-size:26px;
+}
+
+
+/* =========================================================
+   ENVELOPE
+========================================================= */
+
+.envelope-area{
+    text-align:center;
+    margin-bottom:28px;
+}
+
+.envelope{
+    position:relative;
+
+    width:225px;
+    height:145px;
+
+    margin:auto;
+
+    background:#ffb7d0;
+
+    border:5px solid #b82460;
+
+    box-shadow:
+        7px 7px 0 #8d1847;
+
+    cursor:pointer;
+
+    transition:.25s;
+}
+
+.envelope:active{
+    transform:scale(.97);
+}
+
+.envelope-flap{
+    position:absolute;
+
+    top:-5px;
+    left:0;
+
+    width:0;
+    height:0;
+
+    border-left:
+        107px solid transparent;
+
+    border-right:
+        107px solid transparent;
+
+    border-top:
+        74px solid #f17cac;
+
+    transform-origin:top;
+
+    transition:.7s;
+
+    z-index:4;
+}
+
+.envelope.open .envelope-flap{
+    transform:rotateX(180deg);
+}
+
+.envelope-left{
+    position:absolute;
+
+    bottom:0;
+    left:0;
+
+    width:0;
+    height:0;
+
+    border-top:
+        71px solid transparent;
+
+    border-left:
+        103px solid #ef8db3;
+}
+
+.envelope-right{
+    position:absolute;
+
+    bottom:0;
+    right:0;
+
+    width:0;
+    height:0;
+
+    border-top:
+        71px solid transparent;
+
+    border-right:
+        103px solid #ef8db3;
+}
+
+.envelope-icon{
+    position:absolute;
+
+    left:50%;
+    top:53%;
+
+    transform:
+        translate(-50%,-50%);
+
+    color:#b72460;
+
+    font-size:42px;
+
+    z-index:5;
+
+    transition:.7s;
+}
+
+.envelope.open .envelope-icon{
+    transform:
+        translate(-50%,-100px)
+        scale(.7);
+}
+
+.envelope-label{
+    margin-top:16px;
+
+    font-size:6px;
+
+    line-height:2;
+
+    color:#87415b;
+}
+
+
+/* =========================================================
+   CARDS
+========================================================= */
+
+.card{
+    background:#fff5f8;
+
+    border:5px solid #c32968;
+
+    box-shadow:
+        7px 7px 0 #901746;
+
+    padding:18px 14px;
+
+    margin-bottom:23px;
+}
+
+.card-title{
+    display:flex;
+    align-items:center;
+
+    gap:8px;
+
+    color:#c42668;
+
+    font-size:9px;
+
+    line-height:1.7;
+
+    margin-bottom:6px;
+}
+
+.card-title iconify-icon{
+    font-size:20px;
+}
+
+.card-subtitle{
+    font-family:Arial,sans-serif;
+
+    font-size:13px;
+
+    line-height:1.6;
+
+    color:#97536a;
+
+    margin-bottom:17px;
+}
+
+
+/* =========================================================
+   LETTER
+========================================================= */
+
+#letter{
+    display:none;
+
+    animation:
+        letterAppear .7s ease;
+}
+
+#letter.show{
+    display:block;
+}
+
+@keyframes letterAppear{
+
+    from{
+        opacity:0;
+        transform:translateY(25px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+
+}
+
+.letter-header{
+    text-align:center;
+    margin-bottom:18px;
+}
+
+.letter-mini{
+    font-size:5px;
+
+    color:#aa5372;
+
+    margin-bottom:10px;
+}
+
+.letter-header h2{
+    color:#ca2769;
+
+    font-size:11px;
+
+    line-height:1.8;
+}
+
+.letter-divider{
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    gap:8px;
+
+    margin:12px 0;
+
+    color:#cf2d70;
+}
+
+.letter-divider::before,
+.letter-divider::after{
+    content:"";
+
+    width:40px;
+    height:2px;
+
+    background:#df89a8;
+}
+
+.letter-content{
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size:16px;
+
+    line-height:1.85;
+
+    color:#603947;
+
+    white-space:pre-line;
+}
+
+.signature{
+    margin-top:22px;
+
+    text-align:right;
+
+    font-family:
+        Georgia,
+        serif;
+
+    font-style:italic;
+
+    font-size:17px;
+
+    color:#bd2a64;
+}
+
+
+/* =========================================================
+   MEMORY GRID
+========================================================= */
+
+.memory-grid{
+    display:grid;
+
+    grid-template-columns:
+        repeat(2,1fr);
+
+    gap:10px;
+}
+
+.memory{
+    position:relative;
+
+    aspect-ratio:1;
+
+    overflow:hidden;
+
+    background:#ffc4d8;
+
+    border:4px solid #b92561;
+
+    cursor:pointer;
+
+    transition:.2s;
+}
+
+.memory:active{
+    transform:scale(.95);
+}
+
+.memory img{
+    width:100%;
+    height:100%;
+
+    object-fit:cover;
+}
+
+.memory-placeholder{
+    position:absolute;
+    inset:0;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    color:#ba2865;
+
+    font-size:40px;
+}
+
+.memory-label{
+    position:absolute;
+
+    bottom:4px;
+    left:4px;
+
+    display:flex;
+    align-items:center;
+
+    gap:4px;
+
+    padding:5px;
+
+    background:#fff0f5;
+
+    color:#79304e;
+
+    font-size:4px;
+}
+
+.memory-label iconify-icon{
+    font-size:10px;
+}
+
+
+/* =========================================================
+   IMAGE MODAL
+========================================================= */
+
+.image-modal{
+    position:fixed;
+    inset:0;
+
+    z-index:800;
+
+    display:none;
+
+    align-items:center;
+    justify-content:center;
+
+    padding:18px;
+
+    background:
+        rgba(39,7,24,.88);
+}
+
+.image-modal img{
+    max-width:100%;
+    max-height:75vh;
+
+    object-fit:contain;
+
+    border:5px solid #fff;
+
+    box-shadow:
+        7px 7px 0 #e94e8d;
+}
+
+.close-image{
+    position:absolute;
+
+    top:14px;
+    right:14px;
+
+    width:40px;
+    height:40px;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    border:4px solid #fff;
+
+    background:#e84d8c;
+
+    color:#fff;
+
+    font-size:20px;
+}
+
+
+/* =========================================================
+   STORY
+========================================================= */
+
+.timeline{
+    position:relative;
+
+    padding-left:20px;
+}
+
+.timeline::before{
+    content:"";
+
+    position:absolute;
+
+    top:0;
+    bottom:0;
+    left:4px;
+
+    width:3px;
+
+    background:#e46b96;
+}
+
+.story{
+    position:relative;
+
+    padding:
+        0
+        0
+        21px
+        18px;
+}
+
+.story::before{
+    content:"";
+
+    position:absolute;
+
+    left:-1px;
+    top:1px;
+
+    width:13px;
+    height:13px;
+
+    border:3px solid #a91d55;
+
+    background:#ff91b9;
+
+    transform:
+        translateX(-50%);
+}
+
+.story-date{
+    font-size:5px;
+
+    color:#bd2865;
+
+    margin-bottom:8px;
+}
+
+.story p{
+    font-family:Arial,sans-serif;
+
+    font-size:14px;
+
+    line-height:1.6;
+
+    color:#713e51;
+}
+
+
+/* =========================================================
+   REASONS
+========================================================= */
+
+.reason{
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    padding:11px;
+
+    margin-bottom:9px;
+
+    background:#fff0f5;
+
+    border:3px dashed #d05b82;
+}
+
+.reason-icon{
+    min-width:39px;
+    height:39px;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    background:#ff9ec2;
+
+    border:3px solid #a91e57;
+
+    color:#a91e57;
+
+    font-size:20px;
+}
+
+.reason-text{
+    font-family:Arial,sans-serif;
+
+    font-size:14px;
+
+    line-height:1.45;
+
+    color:#713d50;
+}
+
+
+/* =========================================================
+   LOVE METER
+========================================================= */
+
+.meter{
+    margin-top:18px;
+}
+
+.meter-header{
+    display:flex;
+
+    justify-content:space-between;
+
+    margin-bottom:7px;
+
+    font-size:5px;
+
+    color:#a32b5c;
+}
+
+.meter-bar{
+    width:100%;
+    height:23px;
+
+    padding:3px;
+
+    background:#ffd0df;
+
+    border:4px solid #ad2058;
+}
+
+.meter-fill{
+    width:0%;
+    height:100%;
+
+    background:
+        repeating-linear-gradient(
+            90deg,
+            #ee5895 0px,
+            #ee5895 8px,
+            #ff7cab 8px,
+            #ff7cab 14px
+        );
+
+    transition:
+        width 2s ease;
+}
+
+.meter-result{
+    margin-top:11px;
+
+    text-align:center;
+
+    font-family:Arial,sans-serif;
+
+    font-size:13px;
+
+    line-height:1.6;
+
+    color:#783a52;
+}
+
+
+/* =========================================================
+   SECRET
+========================================================= */
+
+.secret-button{
+    width:70px;
+    height:70px;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    margin:18px auto 7px;
+
+    border-radius:50%;
+
+    border:5px solid #9d1b4e;
+
+    background:#ff88b4;
+
+    color:#fff;
+
+    font-size:30px;
+
+    box-shadow:
+        5px 5px 0 #7e153e;
+
+    cursor:pointer;
+}
+
+.secret-button:active{
+    transform:translate(3px,3px);
+
+    box-shadow:
+        2px 2px 0 #7e153e;
+}
+
+.secret-hint{
+    text-align:center;
+
+    font-size:5px;
+
+    line-height:1.8;
+
+    color:#9b4d69;
+}
+
+.secret-message{
+    display:none;
+
+    margin-top:16px;
+
+    padding:16px;
+
+    background:#fff2f7;
+
+    border:4px dashed #b92561;
+
+    font-family:Georgia,serif;
+
+    font-size:16px;
+
+    line-height:1.75;
+
+    color:#67384a;
+}
+
+
+/* =========================================================
+   FINAL CARD
+========================================================= */
+
+.final-card{
+    background:#ef4e91;
+
+    color:#fff;
+
+    border:5px solid #9f194d;
+
+    box-shadow:
+        7px 7px 0 #7d133d;
+
+    text-align:center;
+
+    padding:24px 14px;
+}
+
+.final-icon{
+    font-size:32px;
+    margin-bottom:13px;
+}
+
+.final-card h2{
+    font-size:11px;
+
+    line-height:1.8;
+
+    margin-bottom:13px;
+}
+
+.final-card p{
+    font-family:Georgia,serif;
+
+    font-size:17px;
+
+    line-height:1.65;
+}
+
+
+/* =========================================================
+   MUSIC PLAYER
+========================================================= */
+
+.music-player{
+    position:fixed;
+
+    left:10px;
+    right:10px;
+    bottom:10px;
+
+    z-index:300;
+
+    width:auto;
+    max-width:430px;
+
+    margin:auto;
+
+    display:flex;
+    align-items:center;
+
+    gap:9px;
+
+    padding:8px;
+
+    background:#ffd4e2;
+
+    border:4px solid #b92561;
+
+    box-shadow:
+        5px 5px 0 #8e1848;
+}
+
+.music-button{
+    width:42px;
+    height:42px;
+
+    flex-shrink:0;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border:3px solid #9f1b50;
+
+    background:#ff85b2;
+
+    color:#fff;
+
+    font-size:18px;
+
+    cursor:pointer;
+
+    position:relative;
+
+    z-index:10;
+}
+
+.music-info{
+    flex:1;
+    min-width:0;
+}
+
+.song-name{
+    overflow:hidden;
+
+    white-space:nowrap;
+
+    text-overflow:ellipsis;
+
+    font-size:5px;
+
+    color:#8a2d50;
+}
+
+.song-progress-bar{
+    height:5px;
+
+    margin-top:6px;
+
+    background:#f0a1ba;
+}
+
+.song-progress{
+    width:0%;
+    height:100%;
+
+    background:#c62869;
+}
+
+
+/* =========================================================
+   MUSIC GUIDE OVERLAY
+========================================================= */
+
+.music-guide{
+    position:fixed;
+
+    inset:0;
+
+    z-index:1500;
+
+    display:none;
+
+    pointer-events:none;
+
+    background:
+        rgba(60,8,34,.10);
+}
+
+.music-guide.show{
+    display:block;
+}
+
+
+/* Small cute message */
+
+.music-guide-box{
+    position:absolute;
+
+    left:50%;
+
+    bottom:88px;
+
+    transform:
+        translateX(-50%);
+
+    width:calc(100% - 40px);
+
+    max-width:300px;
+
+    padding:13px 12px;
+
+    background:#fff0f6;
+
+    border:4px solid #c32968;
+
+    box-shadow:
+        5px 5px 0 #8d1747;
+
+    text-align:center;
+
+    animation:
+        guidePop .45s ease;
+}
+
+@keyframes guidePop{
+
+    from{
+        opacity:0;
+        transform:
+            translateX(-50%)
+            scale(.8);
+    }
+
+    to{
+        opacity:1;
+        transform:
+            translateX(-50%)
+            scale(1);
+    }
+
+}
+
+.music-guide-title{
+    color:#c32968;
+
+    font-size:7px;
+
+    line-height:1.7;
+
+    margin-bottom:6px;
+}
+
+.music-guide-text{
+    font-family:Arial,sans-serif;
+
+    color:#713e51;
+
+    font-size:13px;
+
+    line-height:1.45;
+}
+
+.music-guide-small{
+    margin-top:6px;
+
+    font-family:Arial,sans-serif;
+
+    color:#a04b68;
+
+    font-size:11px;
+}
+
+
+/* Arrow */
+
+.music-arrow{
+    position:absolute;
+
+    left:50%;
+
+    bottom:69px;
+
+    width:3px;
+
+    height:45px;
+
+    background:#c32968;
+
+    transform:
+        translateX(-50%);
+
+    animation:
+        arrowPulse .8s ease-in-out infinite;
+}
+
+.music-arrow::after{
+    content:"";
+
+    position:absolute;
+
+    left:50%;
+
+    bottom:-1px;
+
+    width:12px;
+    height:12px;
+
+    border-right:4px solid #c32968;
+    border-bottom:4px solid #c32968;
+
+    transform:
+        translateX(-50%)
+        rotate(45deg);
+}
+
+@keyframes arrowPulse{
+
+    0%,100%{
+        transform:
+            translateX(-50%)
+            translateY(0);
+    }
+
+    50%{
+        transform:
+            translateX(-50%)
+            translateY(5px);
+    }
+
+}
+
+
+/* Little label near arrow */
+
+.music-arrow-label{
+    position:absolute;
+
+    right:14px;
+
+    bottom:73px;
+
+    padding:5px 7px;
+
+    background:#ff91ba;
+
+    border:3px solid #a51d55;
+
+    color:#70203f;
+
+    font-size:5px;
+
+    transform:rotate(-4deg);
+
+    animation:
+        labelFloat 1s ease-in-out infinite;
+}
+
+@keyframes labelFloat{
+
+    0%,100%{
+        transform:rotate(-4deg) translateY(0);
+    }
+
+    50%{
+        transform:rotate(-4deg) translateY(-3px);
+    }
+
+}
+
+
+/* =========================================================
+   WELCOME POPUP
+========================================================= */
+
+.overlay{
+    position:fixed;
+    inset:0;
+
+    z-index:600;
+
+    display:none;
+
+    align-items:center;
+    justify-content:center;
+
+    padding:15px;
+
+    background:
+        rgba(86,18,49,.5);
+}
+
+.popup{
+    width:100%;
+    max-width:320px;
+
+    background:#ffd5e3;
+
+    border:5px solid #bd2564;
+
+    box-shadow:
+        7px 7px 0 #821440;
+
+    animation:
+        popupEntrance .4s ease;
+}
+
+@keyframes popupEntrance{
+
+    from{
+        opacity:0;
+        transform:scale(.8);
+    }
+
+    to{
+        opacity:1;
+        transform:scale(1);
+    }
+
+}
+
+.popup-head{
+    padding:10px;
+
+    background:#ed4b90;
+
+    color:#fff;
+
+    font-size:7px;
+}
+
+.popup-body{
+    padding:20px 14px;
+
+    text-align:center;
+}
+
+.popup-icon{
+    display:flex;
+    justify-content:center;
+
+    color:#c32968;
+
+    font-size:42px;
+
+    margin-bottom:11px;
+}
+
+.popup-body h3{
+    font-size:10px;
+
+    line-height:1.8;
+
+    color:#bd2462;
+
+    margin-bottom:8px;
+}
+
+.popup-body p{
+    font-family:Arial,sans-serif;
+
+    font-size:14px;
+
+    line-height:1.55;
+
+    color:#704052;
+
+    margin-bottom:16px;
+}
+
+.popup-button{
+    width:100%;
+
+    padding:13px;
+
+    border:4px solid #a41d55;
+
+    background:#ff8eb8;
+
+    color:#6d2140;
+
+    font-family:inherit;
+
+    font-size:7px;
+
+    cursor:pointer;
+}
+
+
+/* =========================================================
+   FLOATING ICONS
+========================================================= */
+
+.floating-icon{
+    position:fixed;
+
+    bottom:-30px;
+
+    pointer-events:none;
+
+    z-index:100;
+
+    color:#e66a9a;
+
+    animation:
+        floatUp linear forwards;
+}
+
+@keyframes floatUp{
+
+    from{
+        transform:
+            translateY(0)
+            rotate(0);
+
+        opacity:1;
+    }
+
+    to{
+        transform:
+            translateY(-110vh)
+            rotate(360deg);
+
+        opacity:0;
+    }
+
+}
+
+
+/* =========================================================
+   CLICK SPARKLE
+========================================================= */
+
+.click-sparkle{
+    position:fixed;
+
+    pointer-events:none;
+
+    z-index:900;
+
+    color:#e94d8d;
+
+    font-size:18px;
+
+    animation:
+        sparkle .9s forwards;
+}
+
+@keyframes sparkle{
+
+    0%{
+        opacity:0;
+
+        transform:
+            scale(.2)
+            rotate(0);
+    }
+
+    40%{
+        opacity:1;
+
+        transform:
+            scale(1.3)
+            rotate(90deg);
+    }
+
+    100%{
+        opacity:0;
+
+        transform:
+            scale(.2)
+            rotate(180deg);
+    }
+
+}
+
+
+/* =========================================================
+   MOBILE EXTRA
+========================================================= */
+
+@media(max-width:360px){
+
+    #app{
+        padding-left:10px;
+        padding-right:10px;
+    }
+
+    .letter-content{
+        font-size:15px;
+    }
+
+    .hero h1{
+        font-size:14px;
+    }
+
+    .envelope{
+        width:210px;
+        height:138px;
+    }
+
+    .envelope-flap{
+        border-left-width:99px;
+        border-right-width:99px;
+    }
+
+    .envelope-left{
+        border-left-width:96px;
+    }
+
+    .envelope-right{
+        border-right-width:96px;
+    }
+
+    .music-guide-box{
+        width:calc(100% - 30px);
+    }
+
+}
+
+
+/* =========================================================
+   TALL / SMALL PHONES
+========================================================= */
+
+@media(max-height:650px){
+
+    .music-guide-box{
+        bottom:84px;
+    }
+
+    .music-arrow{
+        bottom:66px;
+        height:38px;
+    }
+
+    .music-arrow-label{
+        bottom:68px;
+    }
+
+}
+
+
+/* =========================================================
+   PREVENT HORIZONTAL OVERFLOW
+========================================================= */
+
+body,
+html{
+    max-width:100%;
+}
+
+img{
+    max-width:100%;
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =======================================================
+     PASSWORD SCREEN
+======================================================= -->
+
+<section id="passwordScreen">
+
+    <div class="password-window" id="passwordWindow">
+
+        <div class="password-title-bar">
+
+            <div class="password-title">
+                love.exe
+            </div>
+
+            <div class="password-window-button">
+
+                <iconify-icon
+                    icon="pixelarticons:lock">
+                </iconify-icon>
+
+            </div>
+
+        </div>
+
+
+        <div class="password-content">
+
+            <div class="password-icon">
+
+                <iconify-icon
+                    icon="pixelarticons:lock">
+                </iconify-icon>
+
+            </div>
+
+
+            <h1>
+                PRIVATE FILE
+            </h1>
+
+
+            <div class="password-description">
+
+                This little world is private.<br>
+                Enter the password to continue.
+
+            </div>
+
+
+            <div class="password-input-area">
+
+                <input
+                    type="password"
+                    id="passwordInput"
+                    placeholder="ENTER PASSWORD"
+                    maxlength="4"
+                    inputmode="numeric"
+                    autocomplete="off">
+
+
+                <button
+                    type="button"
+                    class="password-toggle"
+                    id="passwordToggle"
+                    onclick="togglePassword()">
+
+                    <iconify-icon
+                        icon="pixelarticons:eye">
+                    </iconify-icon>
+
+                </button>
+
+            </div>
+
+
+            <div
+                class="password-error"
+                id="passwordError">
+            </div>
+
+
+            <button
+                type="button"
+                class="password-button"
+                onclick="checkPassword()">
+
+                UNLOCK
+
+            </button>
+
+
+            <div class="password-hint">
+
+                a tiny secret made just for you
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =======================================================
+     BACKGROUND
+======================================================= -->
+
+<div class="background-decoration">
+
+    <div class="bg-icon">
+        <iconify-icon icon="pixelarticons:heart"></iconify-icon>
+    </div>
+
+    <div class="bg-icon">
+        <iconify-icon icon="pixelarticons:star"></iconify-icon>
+    </div>
+
+    <div class="bg-icon">
+        <iconify-icon icon="pixelarticons:heart"></iconify-icon>
+    </div>
+
+    <div class="bg-icon">
+        <iconify-icon icon="pixelarticons:sparkle"></iconify-icon>
+    </div>
+
+</div>
+
+
+
+<!-- =======================================================
+     START SCREEN
+======================================================= -->
+
+<section id="startScreen">
+
+    <div class="start-window">
+
+        <div class="title-bar">
+
+            <div class="title-name">
+                love.exe
+            </div>
+
+            <div class="window-buttons">
+
+                <div class="window-button">
+                    <iconify-icon
+                        icon="pixelarticons:minus">
+                    </iconify-icon>
+                </div>
+
+                <div class="window-button">
+                    <iconify-icon
+                        icon="pixelarticons:close">
+                    </iconify-icon>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="start-content">
+
+            <div class="start-icon">
+
+                <iconify-icon
+                    icon="pixelarticons:heart">
+                </iconify-icon>
+
+            </div>
+
+
+            <h1>
+                start love?
+            </h1>
+
+
+            <p>
+                warning: this little website
+                contains a suspicious amount
+                of affection.
+            </p>
+
+
+            <button
+                class="start-button"
+                onclick="startWebsite()">
+
+                OPEN MY HEART
+
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =======================================================
+     MAIN APP
+======================================================= -->
+
+<main id="app">
+
+<div class="container">
+
+
+    <div class="main-window">
+
+        <div class="main-title">
+
+            <div class="main-title-name">
+                my little world
+            </div>
+
+            <div class="main-buttons">
+
+                <div class="main-button">
+
+                    <iconify-icon
+                        icon="pixelarticons:minus">
+                    </iconify-icon>
+
+                </div>
+
+                <div class="main-button">
+
+                    <iconify-icon
+                        icon="pixelarticons:close">
+                    </iconify-icon>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <nav class="nav">
+
+        <div
+            class="nav-item active"
+            onclick="goToSection('letter')">
+
+            <iconify-icon
+                icon="pixelarticons:mail">
+            </iconify-icon>
+
+            LETTER
+
+        </div>
+
+
+        <div
+            class="nav-item"
+            onclick="goToSection('memories')">
+
+            <iconify-icon
+                icon="pixelarticons:image">
+            </iconify-icon>
+
+            MEMORIES
+
+        </div>
+
+
+        <div
+            class="nav-item"
+            onclick="goToSection('story')">
+
+            <iconify-icon
+                icon="pixelarticons:calendar">
+            </iconify-icon>
+
+            OUR STORY
+
+        </div>
+
+
+        <div
+            class="nav-item"
+            onclick="goToSection('reasons')">
+
+            <iconify-icon
+                icon="pixelarticons:heart">
+            </iconify-icon>
+
+            WHY YOU
+
+        </div>
+
+    </nav>
+
+
+
+    <section class="hero">
+
+        <div class="hero-small">
+
+            a tiny corner of the internet
+            made just for you
+
+        </div>
+
+
+        <h1>
+            for my baby
+        </h1>
+
+
+        <div class="hero-icon">
+
+            <iconify-icon
+                icon="pixelarticons:heart">
+            </iconify-icon>
+
+        </div>
+
+    </section>
+
+
+
+    <section class="envelope-area">
+
+        <div
+            class="envelope"
+            id="envelope"
+            onclick="openLetter()">
+
+            <div class="envelope-flap"></div>
+
+            <div class="envelope-left"></div>
+
+            <div class="envelope-right"></div>
+
+            <div class="envelope-icon">
+
+                <iconify-icon
+                    icon="pixelarticons:mail">
+                </iconify-icon>
+
+            </div>
+
+        </div>
+
+
+        <div class="envelope-label">
+
+            tap the envelope<br>
+
+            there's something I want
+            you to read
+
+        </div>
+
+    </section>
+
+
+
+    <!-- LETTER -->
+
+    <section
+        class="card"
+        id="letter">
+
+        <div class="letter-header">
+
+            <div class="letter-mini">
+                PRIVATE MESSAGE
+            </div>
+
+            <h2>
+                Happy Monthsarry Babyyy
+            </h2>
+
+            <div class="letter-divider">
+
+                <iconify-icon
+                    icon="pixelarticons:heart">
+                </iconify-icon>
+
+            </div>
+
+        </div>
+
+
+        <div
+            class="letter-content"
+            id="letterText">
+        </div>
+
+
+        <div class="signature">
+
+            with all my heart,<br>
+
+            — James pogi
+
+        </div>
+
+    </section>
+
+
+
+    <!-- MEMORIES -->
+
+    <section
+        class="card"
+        id="memories">
+
+        <div class="card-title">
+
+            <iconify-icon
+                icon="pixelarticons:camera">
+            </iconify-icon>
+
+            OUR LITTLE MEMORIES
+
+        </div>
+
+
+        <div class="card-subtitle">
+
+            Mga simpleng sandali na baka ordinaryo
+            para sa iba, pero somehow naging
+            favorite memories ko.
+
+        </div>
+
+
+        <div class="memory-grid">
+
+
+            <div
+                class="memory"
+                onclick="openImage('images/photo1.jpg')">
+
+                <img
+                    src="images/photo1.jpg"
+                    onerror="
+                        this.style.display='none';
+                        this.nextElementSibling.style.display='flex';
+                    ">
+
+                <div
+                    class="memory-placeholder"
+                    style="display:none">
+
+                    <iconify-icon
+                        icon="pixelarticons:image">
+                    </iconify-icon>
+
+                </div>
+
+                <div class="memory-label">
+
+                    <iconify-icon
+                        icon="pixelarticons:camera">
+                    </iconify-icon>
+
+                    MEMORY 01
+
+                </div>
+
+            </div>
+
+
+
+            <div
+                class="memory"
+                onclick="openImage('images/photo2.jpg')">
+
+                <img
+                    src="images/photo2.jpg"
+                    onerror="
+                        this.style.display='none';
+                        this.nextElementSibling.style.display='flex';
+                    ">
+
+                <div
+                    class="memory-placeholder"
+                    style="display:none">
+
+                    <iconify-icon
+                        icon="pixelarticons:image">
+                    </iconify-icon>
+
+                </div>
+
+                <div class="memory-label">
+
+                    <iconify-icon
+                        icon="pixelarticons:camera">
+                    </iconify-icon>
+
+                    MEMORY 02
+
+                </div>
+
+            </div>
+
+
+
+            <div
+                class="memory"
+                onclick="openImage('images/photo3.jpg')">
+
+                <img
+                    src="images/photo3.jpg"
+                    onerror="
+                        this.style.display='none';
+                        this.nextElementSibling.style.display='flex';
+                    ">
+
+                <div
+                    class="memory-placeholder"
+                    style="display:none">
+
+                    <iconify-icon
+                        icon="pixelarticons:image">
+                    </iconify-icon>
+
+                </div>
+
+                <div class="memory-label">
+
+                    <iconify-icon
+                        icon="pixelarticons:camera">
+                    </iconify-icon>
+
+                    MEMORY 03
+
+                </div>
+
+            </div>
+
+
+
+            <div
+                class="memory"
+                onclick="openImage('images/photo4.jpg')">
+
+                <img
+                    src="images/photo4.jpg"
+                    onerror="
+                        this.style.display='none';
+                        this.nextElementSibling.style.display='flex';
+                    ">
+
+                <div
+                    class="memory-placeholder"
+                    style="display:none">
+
+                    <iconify-icon
+                        icon="pixelarticons:image">
+                    </iconify-icon>
+
+                </div>
+
+                <div class="memory-label">
+
+                    <iconify-icon
+                        icon="pixelarticons:camera">
+                    </iconify-icon>
+
+                    MEMORY 04
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- STORY -->
+
+    <section
+        class="card"
+        id="story">
+
+        <div class="card-title">
+
+            <iconify-icon
+                icon="pixelarticons:calendar">
+            </iconify-icon>
+
+            OUR LITTLE STORY
+
+        </div>
+
+
+        <div class="card-subtitle">
+
+            From classmates, to friends, to best friends,
+            and somehow... BFF to lovers. ♡
+
+        </div>
+
+
+        <div class="timeline">
+
+            <div class="story">
+
+                <div class="story-date">
+                    CHAPTER 01 — CLASSMATES
+                </div>
+
+                <p>
+                    Nagsimula lang tayo bilang mag-classmates.
+                    Noong una, hindi mo pa ako gaanong kilala,
+                    at hindi ko rin naman inakala na darating
+                    yung araw na magiging ganito tayo ka-close.
+                </p>
+
+            </div>
+
+
+            <div class="story">
+
+                <div class="story-date">
+                    CHAPTER 02 — YOUR CIRCLE
+                </div>
+
+                <p>
+                    Hanggang sa napasok ako sa circle ninyo.
+                    Unti-unti kitang nakilala, at unti-unti rin
+                    naging mas pamilyar at comfortable tayo
+                    sa isa't isa.
+                </p>
+
+            </div>
+
+
+            <div class="story">
+
+                <div class="story-date">
+                    CHAPTER 03 — GENSHIN ERA 🎮
+                </div>
+
+                <p>
+                    Then somehow, napasok mo rin yung world ko
+                    sa Genshin. Hindi ko alam noon na magiging
+                    isa iyon sa mga little things na maglalapit
+                    sa atin.
+                </p>
+
+            </div>
+
+
+            <div class="story">
+
+                <div class="story-date">
+                    CHAPTER 04 — THE TIKTOKS
+                </div>
+
+                <p>
+                    Tapos nagsimula kang magsend ng TikTok sa akin.
+                    Isang TikTok, naging dalawa, hanggang sa
+                    tuloy-tuloy na yung chats natin. Yung simpleng
+                    send lang dati, naging kwentuhan na ng kung anu-ano.
+                </p>
+
+            </div>
+
+
+            <div class="story">
+
+                <div class="story-date">
+                    CHAPTER 05 — BFF ERA 🫶
+                </div>
+
+                <p>
+                    Yung dating classmates, naging friends.
+                    Yung friends, naging close. Hanggang sa
+                    hindi ko namalayan na naging best friends na tayo.
+                    Ikaw yung taong gusto kong kausap at kwentuhan
+                    kahit tungkol sa pinaka-random na bagay.
+                </p>
+
+            </div>
+
+
+            <div class="story">
+
+                <div class="story-date">
+                    CHAPTER 06 — BFF TO LOVERS ❤️
+                </div>
+
+                <p>
+                    And somewhere along the way, nagbago yung
+                    friendship natin into something more.
+                    Hindi na lang ikaw yung best friend ko.
+                    Ikaw na rin yung taong minahal ko.
+                </p>
+
+            </div>
+
+
+            <div class="story">
+
+                <div class="story-date">
+                    CHAPTER 07 — NOW
+                </div>
+
+                <p>
+                    Ngayon, may work ka na at marami ka nang
+                    responsibilities. Kaya lagi kang mag-iingat, baby.
+                    Kahit busy ka, sana huwag mong kalimutang
+                    alagaan din yung sarili mo.
+                </p>
+
+            </div>
+
+
+            <div class="story">
+
+                <div class="story-date">
+                    NEXT CHAPTER — US ♡
+                </div>
+
+                <p>
+                    Hindi ko alam lahat ng mangyayari sa future,
+                    pero gusto kong marami pa tayong memories
+                    na gawin. From classmates, to best friends,
+                    to lovers — sana marami pa tayong chapters
+                    na maisulat together.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- REASONS -->
+
+    <section
+        class="card"
+        id="reasons">
+
+        <div class="card-title">
+
+            <iconify-icon
+                icon="pixelarticons:heart">
+            </iconify-icon>
+
+            WHY YOU, BABY?
+
+        </div>
+
+
+        <div class="card-subtitle">
+
+            Hindi ko kayang ilista lahat, pero these are
+            some of the reasons why I keep choosing you. ♡
+
+        </div>
+
+
+        <div class="reason">
+
+            <div class="reason-icon">
+
+                <iconify-icon
+                    icon="pixelarticons:heart">
+                </iconify-icon>
+
+            </div>
+
+            <div class="reason-text">
+
+                You make ordinary days feel special just by being there.
+
+            </div>
+
+        </div>
+
+
+        <div class="reason">
+
+            <div class="reason-icon">
+
+                <iconify-icon
+                    icon="pixelarticons:star">
+                </iconify-icon>
+
+            </div>
+
+            <div class="reason-text">
+
+                Kahit random lang yung usapan natin, somehow you can make my day better.
+
+            </div>
+
+        </div>
+
+
+        <div class="reason">
+
+            <div class="reason-icon">
+
+                <iconify-icon
+                    icon="pixelarticons:home">
+                </iconify-icon>
+
+            </div>
+
+            <div class="reason-text">
+
+                I can be myself around you. I don't have to pretend.
+
+            </div>
+
+        </div>
+
+
+        <div class="reason">
+
+            <div class="reason-icon">
+
+                <iconify-icon
+                    icon="pixelarticons:heart">
+                </iconify-icon>
+
+            </div>
+
+            <div class="reason-text">
+
+                I love you not only on your happy days, but also on the days when everything feels heavy.
+
+            </div>
+
+        </div>
+
+
+        <div class="reason">
+
+            <div class="reason-icon">
+
+                <iconify-icon
+                    icon="pixelarticons:star">
+                </iconify-icon>
+
+            </div>
+
+            <div class="reason-text">
+
+                You're someone I don't want to imagine my future without.
+
+            </div>
+
+        </div>
+
+
+        <div class="meter">
+
+            <div class="meter-header">
+
+                <span>love.exe</span>
+
+                <span>INFINITE ♡</span>
+
+            </div>
+
+
+            <div class="meter-bar">
+
+                <div
+                    class="meter-fill"
+                    id="meterFill">
+                </div>
+
+            </div>
+
+
+            <div
+                class="meter-result"
+                id="meterResult">
+
+                calculating...
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- SECRET -->
+
+    <section class="card">
+
+        <div class="card-title">
+
+            <iconify-icon
+                icon="pixelarticons:lock">
+            </iconify-icon>
+
+            SECRET FILE
+
+        </div>
+
+
+        <div class="card-subtitle">
+
+            There's one more thing here.
+            Pero kailangan mo muna siyang
+            i-unlock.
+
+        </div>
+
+
+        <button
+            class="secret-button"
+            id="secretButton"
+            onclick="unlockSecret()">
+
+            <iconify-icon
+                icon="pixelarticons:heart">
+            </iconify-icon>
+
+        </button>
+
+
+        <div
+            class="secret-hint"
+            id="secretHint">
+
+            tap the heart 5 times
+
+        </div>
+
+
+        <div
+            class="secret-message"
+            id="secretMessage">
+
+            Baby, kung dumating yung araw na pagod ka na,
+            gusto kong maalala mo na hindi mo kailangang
+            dalhin lahat mag-isa.
+
+            <br><br>
+
+            Kapag napapagod ka sa work, sa responsibilities,
+            o kahit sa mga nangyayari sa bahay, you can always
+            talk to me. Hindi ko man kayang ayusin lahat,
+            I can listen. I can stay. I can remind you that
+            you're not alone.
+
+            <br><br>
+
+            You don't have to be strong all the time.
+            You don't have to pretend that everything is okay.
+
+            <br><br>
+
+            And please remember this:
+            I'm proud of you, babyyy mwaps. ♡
+        </div>
+
+    </section>
+
+
+
+    <!-- FINAL -->
+
+    <section class="final-card">
+
+        <div class="final-icon">
+
+            <iconify-icon
+                icon="pixelarticons:heart">
+            </iconify-icon>
+
+        </div>
+
+
+        <h2>
+            MEMORY FULL
+        </h2>
+
+
+        <p>
+
+            Please delete your worries
+            and replace them with
+            a little reminder:
+
+            <br><br>
+
+            you're loved.
+
+            <br><br>
+
+            very, very much.
+
+        </p>
+
+    </section>
+
+
+</div>
+
+
+
+<!-- =======================================================
+     MUSIC PLAYER
+======================================================= -->
+
+<div class="music-player">
+
+    <button
+        class="music-button"
+        id="musicButton"
+        onclick="toggleMusic()">
+
+        <iconify-icon
+            icon="pixelarticons:play">
+        </iconify-icon>
+
+    </button>
+
+
+    <div class="music-info">
+
+        <div class="song-name">
+
+            our little song ♡
+
+        </div>
+
+
+        <div class="song-progress-bar">
+
+            <div
+                class="song-progress"
+                id="songProgress">
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+</main>
+
+
+
+<!-- =======================================================
+     MUSIC GUIDE
+======================================================= -->
+
+<div
+    class="music-guide"
+    id="musicGuide">
+
+
+    <div class="music-guide-box">
+
+        <div class="music-guide-title">
+
+            ♡ ONE LITTLE THING FIRST ♡
+
+        </div>
+
+
+        <div class="music-guide-text">
+
+            Please play the music first, baby.
+
+        </div>
+
+
+        <div class="music-guide-small">
+
+            tap the pink ▶ button below
+
+        </div>
+
+    </div>
+
+
+    <div class="music-arrow"></div>
+
+
+    <div class="music-arrow-label">
+
+        TAP HERE ♡
+
+    </div>
+
+</div>
+
+
+
+<!-- =======================================================
+     WELCOME POPUP
+======================================================= -->
+
+<div
+    class="overlay"
+    id="welcomePopup">
+
+
+    <div class="popup">
+
+        <div class="popup-head">
+            love.exe
+        </div>
+
+
+        <div class="popup-body">
+
+            <div class="popup-icon">
+
+                <iconify-icon
+                    icon="pixelarticons:heart">
+                </iconify-icon>
+
+            </div>
+
+
+            <h3>
+                MEMORY FULL
+            </h3>
+
+
+            <p>
+
+                Please leave your worries outside.
+                This little world was made
+                for you, baby. ♡
+
+            </p>
+
+
+            <button
+                class="popup-button"
+                onclick="closePopup()">
+
+                OK
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- =======================================================
+     IMAGE MODAL
+======================================================= -->
+
+<div
+    class="image-modal"
+    id="imageModal"
+    onclick="closeImage()">
+
+
+    <button
+        class="close-image"
+        onclick="closeImage()">
+
+        <iconify-icon
+            icon="pixelarticons:close">
+        </iconify-icon>
+
+    </button>
+
+
+    <img
+        id="modalImage"
+        src=""
+        alt="Memory"
+        onclick="event.stopPropagation()">
+
+</div>
+
+
+
+<script>
+
+/* =========================================================
+   PASSWORD
+========================================================= */
+
+const correctPassword = "1717";
+
+let passwordUnlocked = false;
+
+
+function checkPassword(){
+
+    const input =
+        document.getElementById("passwordInput");
+
+    const passwordWindow =
+        document.getElementById("passwordWindow");
+
+    const error =
+        document.getElementById("passwordError");
+
+    const enteredPassword =
+        input.value.trim();
+
+
+    if(enteredPassword === correctPassword){
+
+        passwordUnlocked = true;
+
+        error.textContent =
+            "ACCESS GRANTED";
+
+        error.style.color =
+            "#9c2050";
+
+
+        const passwordScreen =
+            document.getElementById(
+                "passwordScreen"
+            );
+
+
+        passwordScreen.style.opacity = "0";
+
+        passwordScreen.style.transform =
+            "scale(.9)";
+
+
+        createPasswordSuccessEffect();
+
+
+        setTimeout(()=>{
+
+            passwordScreen.style.display =
+                "none";
+
+
+            document
+                .getElementById("startScreen")
+                .style.display = "flex";
+
+
+            document
+                .getElementById("passwordInput")
+                .value = "";
+
+
+        },600);
+
+    }
+
+    else{
+
+        error.textContent =
+            "Incorrect password. Try again.";
+
+
+        passwordWindow.classList.remove(
+            "shake"
+        );
+
+
+        void passwordWindow.offsetWidth;
+
+
+        passwordWindow.classList.add(
+            "shake"
+        );
+
+
+        input.value = "";
+
+        input.focus();
+
+
+        createPasswordErrorEffect();
+
+    }
+
+}
+
+
+/* =========================================================
+   PASSWORD TOGGLE
+========================================================= */
+
+function togglePassword(){
+
+    const input =
+        document.getElementById(
+            "passwordInput"
+        );
+
+    const button =
+        document.getElementById(
+            "passwordToggle"
+        );
+
+
+    if(input.type === "password"){
+
+        input.type = "text";
+
+
+        button.innerHTML = `
+
+            <iconify-icon
+                icon="pixelarticons:eye-closed">
+            </iconify-icon>
+
+        `;
+
+    }
+
+    else{
+
+        input.type = "password";
+
+
+        button.innerHTML = `
+
+            <iconify-icon
+                icon="pixelarticons:eye">
+            </iconify-icon>
+
+        `;
+
+    }
+
+}
+
+
+/* =========================================================
+   ENTER PASSWORD
+========================================================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    ()=>{
+
+        const input =
+            document.getElementById(
+                "passwordInput"
+            );
+
+
+        input.addEventListener(
+            "keydown",
+            function(event){
+
+                if(event.key === "Enter"){
+
+                    checkPassword();
+
+                }
+
+            }
+        );
+
+
+        input.focus();
+
+    }
+);
+
+
+/* =========================================================
+   PASSWORD SUCCESS
+========================================================= */
+
+function createPasswordSuccessEffect(){
+
+    for(
+        let i = 0;
+        i < 18;
+        i++
+    ){
+
+        setTimeout(()=>{
+
+            const sparkle =
+                document.createElement(
+                    "iconify-icon"
+                );
+
+
+            sparkle.className =
+                "click-sparkle";
+
+
+            sparkle.setAttribute(
+                "icon",
+                "pixelarticons:sparkle"
+            );
+
+
+            sparkle.style.left =
+                (35 +
+                Math.random()*30) + "%";
+
+
+            sparkle.style.top =
+                (35 +
+                Math.random()*30) + "%";
+
+
+            document.body.appendChild(
+                sparkle
+            );
+
+
+            setTimeout(()=>{
+
+                sparkle.remove();
+
+            },900);
+
+        },i*45);
+
+    }
+
+}
+
+
+/* =========================================================
+   PASSWORD ERROR
+========================================================= */
+
+function createPasswordErrorEffect(){
+
+    for(
+        let i = 0;
+        i < 8;
+        i++
+    ){
+
+        setTimeout(()=>{
+
+            const sparkle =
+                document.createElement(
+                    "iconify-icon"
+                );
+
+
+            sparkle.className =
+                "click-sparkle";
+
+
+            sparkle.setAttribute(
+                "icon",
+                "pixelarticons:close"
+            );
+
+
+            sparkle.style.left =
+                (30 +
+                Math.random()*40) + "%";
+
+
+            sparkle.style.top =
+                (35 +
+                Math.random()*30) + "%";
+
+
+            document.body.appendChild(
+                sparkle
+            );
+
+
+            setTimeout(()=>{
+
+                sparkle.remove();
+
+            },700);
+
+        },i*50);
+
+    }
+
+}
+
+
+/* =========================================================
+   LOVE LETTER
+========================================================= */
+
+const loveLetter = `
+
+Hi, baby. ♡
+
+Hindi ko talaga alam kung paano ko sisimulan itong letter na 'to, pero gusto kong ikwento kung paano tayo nagsimula at kung gaano ako kasaya na umabot tayo sa kung nasaan tayo ngayon.
+
+Nagsimula lang tayo bilang mag-classmates. Noong una, hindi mo pa ako gaanong kilala, at honestly, hindi ko rin naman inakala na magiging ganito tayo ka-close. Hanggang sa napasokan kita i mean napasok ako sa circle ninyo, at doon unti-unti kitang nakilala.
+
+Then somehow, napasok mo rin yung world ko sa Genshin. At doon, mas may onti tayong moments. Tapos nagsimula kang magsend ng TikTok sa akin HAHAHAA. Yung simpleng TikTok na akala mo wala lang, naging dahilan para tuloy-tuloy yung conversations natin.
+
+Yung TikTok naging chat.
+Yung chat naging kwentutan, kwentuhan.
+Yung kwentuhan naging friendship.
+At yung friendship natin, naging BFF.
+
+Hanggang sa hindi ko na namalayan na yung BFF ko, siya na rin pala yung taong mamagiging asawa ko.
+
+Baby, gusto ko ring malaman mo na proud ako sa'yo. Alam kong may work ka na ngayon at hindi laging madali yung mga araw mo. May times din na napapagalitan o nabubungaan ka sa bahay, at alam kong nakakapagod din yun. Hindi ko man kayang ayusin lahat ng problema mo, gusto kong malaman mo na hindi mo kailangang isipin na kailangan mong maging okay palagi kapag pagod ka na.
+
+Kapag mabigat yung araw mo, sana maalala mong may taong willing makinig sa'yo. Taong pag kwekwentohan mo, paglalabasan ng milk sama ng loob. Andito ako para sayo.
+
+And please, baby, lagi kang mag-iingat lalo na ngayon na may work ka. Kumain ka sa tamang oras, magpahinga kapag pagod ka, at huwag mong pabayaan yung sarili mo dahil lang marami kang kailangang gawin. Gusto kitang makita na okay at masaya.
+
+Thank you rin sa lahat ng ginagawa mo para sa akin. Sa mga libre mo, sa mga little things, sa paglalaan mo ng oras, at sa lahat ng ways na ipinaparamdam mong mahalaga ako. Hindi ko nakakalimutan lahat yun.
+
+Darating din yung araw na makakabawi ako sa'yo. Balang araw, ako naman ang manlilibre sa'yo. Hindi man ngayon, pero tandaan mo, may plano akong bumawi sa lahat ng kabutihan mo sa akin mwaps.
+
+Sana hindi ka magsawang mahalin ako. Sana hindi ka magsawang kausapin ako, kulitin ako, tawanan yung mga kalokohan ko, at makasama ako sa mga simpleng araw.
+
+Ang dami pa nating pwedeng maranasan. Ang dami pa nating memories na pwedeng ma build. gusto kong ako pa rin yung kasama mo sa mga susunod na chapters wala ng iba.
+
+Baby, thank you for entering my world. Thank you for staying. Thank you for loving me.
+
+And if someday you feel like the world is too heavy, come to me. Hindi man ako makasagot sa lahat ng problema mo, I can listen, stay, and remind you that you are loved.
+
+ILOVEYOUUUUSOMUCHH BABYYY, and HAPPY MONTHSARRY. More than I can fit into this little website. ♡
+`;
+
+
+/* =========================================================
+   START WEBSITE
+========================================================= */
+
+function startWebsite(){
+
+    const start =
+        document.getElementById("startScreen");
+
+    const app =
+        document.getElementById("app");
+
+
+    start.style.opacity = "0";
+
+    start.style.transform =
+        "scale(.9)";
+
+
+    setTimeout(()=>{
+
+        start.style.display = "none";
+
+        app.style.display = "block";
+
+        window.scrollTo(0,0);
+
+        createFloatingIcons();
+
+
+        /*
+         * IMPORTANT:
+         * MUSIC GUIDE muna.
+         * Hindi muna lalabas ang MEMORY FULL.
+         */
+
+        setTimeout(()=>{
+
+            document
+                .getElementById("musicGuide")
+                .classList.add("show");
+
+        },500);
+
+    },500);
+
+}
+
+
+/* =========================================================
+   MUSIC
+========================================================= */
+
+const music =
+    new Audio("music/love.mp3");
+
+music.loop = true;
+
+let musicPlaying = false;
+
+let musicUnlocked = false;
+
+
+const musicButton =
+    document.getElementById(
+        "musicButton"
+    );
+
+const progress =
+    document.getElementById(
+        "songProgress"
+    );
+
+
+function toggleMusic(){
+
+    if(!musicPlaying){
+
+        music
+            .play()
+            .then(()=>{
+
+                musicPlaying = true;
+
+                musicUnlocked = true;
+
+
+                musicButton.innerHTML = `
+
+                    <iconify-icon
+                        icon="pixelarticons:pause">
+                    </iconify-icon>
+
+                `;
+
+
+                /*
+                 * Remove music guide
+                 */
+
+                const guide =
+                    document.getElementById(
+                        "musicGuide"
+                    );
+
+
+                guide.classList.remove(
+                    "show"
+                );
+
+
+                /*
+                 * AFTER MUSIC GUIDE CLOSES,
+                 * saka lalabas ang MEMORY FULL
+                 */
+
+                setTimeout(()=>{
+
+                    document
+                        .getElementById(
+                            "welcomePopup"
+                        )
+                        .style.display = "flex";
+
+                },350);
+
+
+                createSparkles();
+
+            })
+            .catch(()=>{
+
+                alert(
+                    "Please add music/love.mp3 first."
+                );
+
+            });
+
+    }
+
+    else{
+
+        music.pause();
+
+        musicPlaying = false;
+
+
+        musicButton.innerHTML = `
+
+            <iconify-icon
+                icon="pixelarticons:play">
+            </iconify-icon>
+
+        `;
+
+    }
+
+}
+
+
+/* =========================================================
+   MUSIC PROGRESS
+========================================================= */
+
+music.addEventListener(
+    "timeupdate",
+    ()=>{
+
+        if(music.duration){
+
+            const percent =
+                (music.currentTime /
+                music.duration) * 100;
+
+
+            progress.style.width =
+                percent + "%";
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   CLOSE POPUP
+========================================================= */
+
+function closePopup(){
+
+    document
+        .getElementById("welcomePopup")
+        .style.display = "none";
+
+    createSparkles();
+
+}
+
+
+/* =========================================================
+   OPEN LETTER
+========================================================= */
+
+let letterOpened = false;
+
+
+function openLetter(){
+
+    const envelope =
+        document.getElementById(
+            "envelope"
+        );
+
+    const letter =
+        document.getElementById(
+            "letter"
+        );
+
+
+    envelope.classList.add("open");
+
+
+    setTimeout(()=>{
+
+        letter.classList.add("show");
+
+
+        letter.scrollIntoView({
+
+            behavior:"smooth",
+
+            block:"start"
+
+        });
+
+
+        if(!letterOpened){
+
+            letterOpened = true;
+
+            setTimeout(
+                typeLetter,
+                600
+            );
+
+        }
+
+    },500);
+
+
+    createSparkles();
+
+}
+
+
+/* =========================================================
+   TYPEWRITER
+========================================================= */
+
+let letterTyped = false;
+
+
+function typeLetter(){
+
+    if(letterTyped){
+        return;
+    }
+
+
+    letterTyped = true;
+
+
+    const target =
+        document.getElementById(
+            "letterText"
+        );
+
+
+    let index = 0;
+
+
+    function type(){
+
+        if(index < loveLetter.length){
+
+            target.textContent +=
+                loveLetter.charAt(index);
+
+
+            index++;
+
+
+            let delay = 18;
+
+
+            if(
+                loveLetter.charAt(index-1)
+                === "\n"
+            ){
+
+                delay = 100;
+
+            }
+
+
+            setTimeout(
+                type,
+                delay
+            );
+
+        }
+
+    }
+
+
+    type();
+
+}
+
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
+
+function goToSection(id){
+
+    if(
+        id === "letter" &&
+        !letterOpened
+    ){
+
+        openLetter();
+
+        return;
+
+    }
+
+
+    const section =
+        document.getElementById(id);
+
+
+    if(section){
+
+        section.scrollIntoView({
+
+            behavior:"smooth",
+
+            block:"start"
+
+        });
+
+    }
+
+}
+
+
+/* =========================================================
+   IMAGE VIEWER
+========================================================= */
+
+function openImage(src){
+
+    const modal =
+        document.getElementById(
+            "imageModal"
+        );
+
+    const image =
+        document.getElementById(
+            "modalImage"
+        );
+
+
+    image.src = src;
+
+    modal.style.display = "flex";
+
+}
+
+
+function closeImage(){
+
+    document
+        .getElementById(
+            "imageModal"
+        )
+        .style.display = "none";
+
+}
+
+
+/* =========================================================
+   SECRET
+========================================================= */
+
+let secretClicks = 0;
+
+
+function unlockSecret(){
+
+    secretClicks++;
+
+
+    const button =
+        document.getElementById(
+            "secretButton"
+        );
+
+
+    const scale =
+        1 + (secretClicks * .08);
+
+
+    button.style.transform =
+        `scale(${scale})`;
+
+
+    createSparkles();
+
+
+    if(secretClicks >= 5){
+
+        const message =
+            document.getElementById(
+                "secretMessage"
+            );
+
+
+        message.style.display =
+            "block";
+
+
+        button.innerHTML = `
+
+            <iconify-icon
+                icon="pixelarticons:heart">
+            </iconify-icon>
+
+        `;
+
+
+        button.style.background =
+            "#e94d8d";
+
+
+        document
+            .getElementById(
+                "secretHint"
+            )
+            .textContent =
+            "SECRET UNLOCKED";
+
+    }
+
+}
+
+
+/* =========================================================
+   LOVE METER
+========================================================= */
+
+setTimeout(()=>{
+
+    const fill =
+        document.getElementById(
+            "meterFill"
+        );
+
+
+    if(fill){
+
+        fill.style.width = "100%";
+
+
+        setTimeout(()=>{
+
+            document
+                .getElementById(
+                    "meterResult"
+                )
+                .textContent =
+                "Error: love exceeds maximum capacity.";
+
+        },1800);
+
+    }
+
+},2000);
+
+
+/* =========================================================
+   FLOATING ICONS
+========================================================= */
+
+function createFloatingIcons(){
+
+    setInterval(()=>{
+
+        const icon =
+            document.createElement(
+                "iconify-icon"
+            );
+
+
+        icon.className =
+            "floating-icon";
+
+
+        const icons = [
+
+            "pixelarticons:heart",
+
+            "pixelarticons:heart",
+
+            "pixelarticons:star",
+
+            "pixelarticons:sparkle"
+
+        ];
+
+
+        icon.setAttribute(
+            "icon",
+            icons[
+                Math.floor(
+                    Math.random() *
+                    icons.length
+                )
+            ]
+        );
+
+
+        icon.style.left =
+            Math.random() * 100 + "%";
+
+
+        icon.style.fontSize =
+            (14 +
+            Math.random() * 15) + "px";
+
+
+        icon.style.animationDuration =
+            (5 +
+            Math.random() * 5) + "s";
+
+
+        document.body.appendChild(
+            icon
+        );
+
+
+        setTimeout(()=>{
+
+            icon.remove();
+
+        },10000);
+
+    },1300);
+
+}
+
+
+/* =========================================================
+   SPARKLES
+========================================================= */
+
+function createSparkles(){
+
+    for(
+        let i = 0;
+        i < 15;
+        i++
+    ){
+
+        setTimeout(()=>{
+
+            const sparkle =
+                document.createElement(
+                    "iconify-icon"
+                );
+
+
+            sparkle.className =
+                "click-sparkle";
+
+
+            const icons = [
+
+                "pixelarticons:sparkle",
+
+                "pixelarticons:star",
+
+                "pixelarticons:heart"
+
+            ];
+
+
+            sparkle.setAttribute(
+                "icon",
+                icons[
+                    Math.floor(
+                        Math.random() *
+                        icons.length
+                    )
+                ]
+            );
+
+
+            sparkle.style.left =
+                Math.random() * 90 + "%";
+
+
+            sparkle.style.top =
+                Math.random() * 85 + "%";
+
+
+            document.body.appendChild(
+                sparkle
+            );
+
+
+            setTimeout(()=>{
+
+                sparkle.remove();
+
+            },900);
+
+        },i * 60);
+
+    }
+
+}
+
+
+/* =========================================================
+   CLICK EFFECT
+========================================================= */
+
+document.addEventListener(
+    "click",
+    function(event){
+
+        if(
+            event.target.closest("button") ||
+            event.target.closest(".envelope") ||
+            event.target.closest(".memory")
+        ){
+
+            return;
+
+        }
+
+
+        const sparkle =
+            document.createElement(
+                "iconify-icon"
+            );
+
+
+        sparkle.className =
+            "click-sparkle";
+
+
+        sparkle.setAttribute(
+            "icon",
+            "pixelarticons:sparkle"
+        );
+
+
+        sparkle.style.left =
+            event.clientX + "px";
+
+
+        sparkle.style.top =
+            event.clientY + "px";
+
+
+        document.body.appendChild(
+            sparkle
+        );
+
+
+        setTimeout(()=>{
+
+            sparkle.remove();
+
+        },900);
+
+    }
+);
+
+
+/* =========================================================
+   ACTIVE NAV
+========================================================= */
+
+const navItems =
+    document.querySelectorAll(
+        ".nav-item"
+    );
+
+
+navItems.forEach(item=>{
+
+    item.addEventListener(
+        "click",
+        ()=>{
+
+            navItems.forEach(
+                nav=>{
+                    nav.classList.remove(
+                        "active"
+                    );
+                }
+            );
+
+
+            item.classList.add(
+                "active"
+            );
+
+        }
+    );
+
+});
+
+</script>
+
+</body>
+</html>
